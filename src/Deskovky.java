@@ -1,6 +1,4 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,34 +44,28 @@ public class Deskovky extends JFrame {
         RB2.addItemListener(e -> handleRadioButtonClick(2));
         RB3.addItemListener(e -> handleRadioButtonClick(3));
 
-        next.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        next.addActionListener(e -> {
 
-                if (indexAktualniHry < seznamDeskovek.size() -1) {
-                    indexAktualniHry++;
-                    zobrazDeskovku(ziskejDeskovku(indexAktualniHry));
+            if (indexAktualniHry < seznamDeskovek.size() -1) {
+                indexAktualniHry++;
+                zobrazDeskovku(ziskejDeskovku(indexAktualniHry));
 
-                }
             }
         });
 
-        previous.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (indexAktualniHry > 0) {
-                    indexAktualniHry--;
-                    zobrazDeskovku(ziskejDeskovku(indexAktualniHry));
-                }
+        previous.addActionListener(e -> {
+            if (indexAktualniHry > 0) {
+                indexAktualniHry--;
+                zobrazDeskovku(ziskejDeskovku(indexAktualniHry));
             }
         });
 
         save.addActionListener(e -> ulozDoSouboru());
-        cteniZeSouboru();
+        ctiZeSouboru();
         if (!getSeznamDeskovek().isEmpty()){
             zobrazDeskovku(ziskejDeskovku(indexAktualniHry));
         } else {
-            JOptionPane.showMessageDialog(this, "List je prázdný!", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "List je prázdný!");
         }
 
     }
@@ -82,7 +74,7 @@ public class Deskovky extends JFrame {
         }
 
 
-    public void cteniZeSouboru () {
+    public void ctiZeSouboru() {
         try (Scanner sc = new Scanner(new BufferedReader(new FileReader("Deskovky.txt")))) {
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
@@ -101,17 +93,17 @@ public class Deskovky extends JFrame {
     }
 
     public void ulozDoSouboru() {
-        Deskovka selectedBG = seznamDeskovek.get(indexAktualniHry);
-        selectedBG.setNazev(textField1.getText());
-        selectedBG.setJeZakoupena(anoCheckBox.isSelected());
-        selectedBG.setOblibenost(vybranaOblibenost);
+        Deskovka vybranaDeskovka = seznamDeskovek.get(indexAktualniHry);
+        vybranaDeskovka.setNazev(textField1.getText());
+        vybranaDeskovka.setJeZakoupena(anoCheckBox.isSelected());
+        vybranaDeskovka.setOblibenost(vybranaOblibenost);
 
 
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("Deskovky.txt")))) {
             for (Deskovka deskovka : seznamDeskovek) {
                 writer.println(deskovka.getNazev() + ";" + (deskovka.isJeZakoupena() ? "ano" : "ne") + ";" + deskovka.getOblibenost());
             }
-            JOptionPane.showMessageDialog(this, "Změny uloženy do souboru.", "Message saved", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Změny uloženy do souboru.");
         } catch (IOException e) {
             System.err.println("Chyba při zápisu do souboru: " + e.getLocalizedMessage());
         }

@@ -2,5 +2,5 @@
 Monopoly;ano;2
 Dostihy a sázky;ne;3
 AZ kvíz;ano;1
-Word;ne;2
+Word;ano;2
 Double;ano;2
