@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ public class Deskovky extends JFrame {
     private JRadioButton RB1;
     private JRadioButton RB3;
     private JRadioButton RB2;
+    private JButton addButton;
 
     private int indexAktualniHry = 0;
 
@@ -60,6 +63,14 @@ public class Deskovky extends JFrame {
             }
         });
 
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PridavaciOkno pridavaciOkno = new PridavaciOkno();
+
+            }
+        });
+
         save.addActionListener(e -> ulozDoSouboru());
         ctiZeSouboru();
         if (!getSeznamDeskovek().isEmpty()){
@@ -86,9 +97,9 @@ public class Deskovky extends JFrame {
                 seznamDeskovek.add(deskovka);
             }
         } catch (FileNotFoundException e) {
-            System.err.println("Soubor nebyl nalezen: " + e.getLocalizedMessage());
+            JOptionPane.showMessageDialog(this, "Soubor nebyl nalezen: " + e.getLocalizedMessage());
         } catch (NumberFormatException e) {
-            System.err.println("Špatné zapsání čísla: " + e.getLocalizedMessage());
+            JOptionPane.showMessageDialog(this, "Špatné zapsání čísla: " + e.getLocalizedMessage());
         }
     }
 
@@ -105,7 +116,7 @@ public class Deskovky extends JFrame {
             }
             JOptionPane.showMessageDialog(this, "Změny uloženy do souboru.");
         } catch (IOException e) {
-            System.err.println("Chyba při zápisu do souboru: " + e.getLocalizedMessage());
+            JOptionPane.showMessageDialog(this, "Chyba při zápisu do souboru: " + e.getLocalizedMessage());
         }
     }
 
