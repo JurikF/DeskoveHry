@@ -22,7 +22,7 @@ public class Deskovky extends JFrame {
 
     private int vybranaOblibenost = 1;
 
-    private final List<Deskovka> seznamDeskovek = new ArrayList<>();
+    private List<Deskovka> seznamDeskovek = new ArrayList<>();
 
     public Deskovka ziskejDeskovku(int i) {
         return seznamDeskovek.get(i);
@@ -91,7 +91,7 @@ public class Deskovky extends JFrame {
                 String line = sc.nextLine();
                 String[] bloky = line.split(";");
                 String nazev = bloky[0];
-                Boolean jeZakoupena = bloky[1].equals("ano");
+                boolean jeZakoupena = bloky[1].equals("ano");
                 int oblibenost = Integer.parseInt(bloky[2]);
                 Deskovka deskovka = new Deskovka(nazev, jeZakoupena, oblibenost);
                 seznamDeskovek.add(deskovka);
